@@ -55,3 +55,7 @@ Output:
 
 - To provide a Java solution, edit Solution.java
 - To provide a Python solution, edit solution.py
+
+## Solution 
+
+![image](https://user-images.githubusercontent.com/81584201/183728725-7f326d4d-4b06-45fc-937c-3901abda0961.png)
