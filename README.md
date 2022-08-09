@@ -48,3 +48,35 @@ After finishing Level 3, the Foobar server ask if you want to provide your conta
 Nevertheless, I still believe this challenge is worthwhile. It will expose you to new coding concepts, sharpen your skills, and ultimately, make you a better developer.
 
 <a href="#top" align="right">(Back to top)</a>
+
+## Levels 
+
+### Level 1 
+
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_1" target="_blank">Skipping Work</a>
+
+### Level 2
+
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_1" target="_blank">Something</a>
+
+### Level 3
+
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+
+### Level 4
+
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+
+### Level 5
+
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
