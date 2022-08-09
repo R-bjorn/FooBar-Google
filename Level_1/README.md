@@ -1,12 +1,17 @@
-# Minion Task Scheduling
+# Skipping Work
 
 ## Description
 
-**Commander Lambda's minions** are upset! They're given the worst jobs on the whole space station, and some of them are starting to complain that even those worst jobs are being allocated unfairly. If you can fix this problem, it'll prove your chops to Commander Lambda so you can get promoted!
+Commander Lambda is all about efficiency, including using her bunny "workers" for manual labor. But no one's been properly monitoring the labor shifts for a while and they've gotten quite mixed up. You've been given the task of fixing them, but after you wrote up new shifts you realized that some bunny workers had been transferred to a different area and aren't available for their assigned shifts. Manually sorting through each shift list to compare against work area lists will take forever -- remember, Commander Lambda loves efficiency!
 
-Minion's tasks are assigned by __putting their ID numbers into a list__, one time for each day they'll work on that task. As shifts are planned well in advance, the lists for each task will contain up to **99 integers**. When a minion is scheduled for the same task too many times, they'll complain about it until they're taken off the task completely. Some tasks are worse than others, so the number of scheduled assignments before a minion will refuse to do a task varies depending on the task. You figure you can speed things up by automating the removal of the minions who have been assigned a task too many times before they even get a chance to start complaining.
+<details><summary>Details about this assignment</summary>
+Given two almost identical lists of worker IDs x and y where one of the lists contains an additional ID, write a function solution(x, y) that compares the lists and returns the additional ID.
 
-__Write a function called answer(data, n)__ that takes in a list of less than **100 integers** and **a number n**, and __returns that same list but with all of the numbers that occur more than n times removed entirely__. The returned list should retain the same ordering as the original list - you don't want to mix up those carefully planned shift rotations! For instance, if data was [5, 10, 15, 10, 7] and n was 1, answer(data, n ) would return the list [5, 15, 7] because 10 occurs twice, and was thus removed from the list entirely.
+For example, given the lists x = [13, 5, 6, 2, 5] and y = [5, 2, 5, 13], the function solution(x, y) would return 6 because the list x contains the integer 6 and the list y doesn't. Given the lists x = [14, 27, 1, 4, 2, 50, 3, 1] and y = [2, 4, -4, 3, 1, 1, 14, 27, 50], the function solution(x, y) would return -4 because the list y contains the integer -4 and the list x doesn't.
+
+In each test case, the lists x and y will always contain n non-unique integers where n is at least 1 but never more than 99, and one of the lists will contain an additional unique integer which should be returned by the function. The same n non-unique integers will be present on both lists, but they might appear in a different order like in the examples above. Commander Lambda likes to keep the numbers short, so every worker ID will be between -1000 and 1000.
+
+</details>
 
 ## Languages
 
@@ -15,41 +20,33 @@ To provide a Python solution, edit solution.py
 
 ## Test Cases
 
+Your code should pass the following test cases.
+Note that it may also be run against hidden test cases not shown here.
+
 ### Test Case 1
 
 Inputs:
 
-    (int list) data = [1, 2, 3]
+    (int list) list1 = {13, 5, 6, 2, 5}
 
-    (int) n = 0
+    (int list) list2 = {5, 2, 5, 13}
 
 Output:
 
-    (int list) []
+    (int) 6
 
 ### Test Case 2
 
 Inputs:
 
-    (int list) data = [1, 2, 2, 3, 3, 3, 4, 5, 5]
+    (int list) list1 = {14, 27, 1, 4, 2, 50, 3, 1}
 
-    (int) n = 1
-
-Output:
-
-    (int list) [1, 4]
-
-### Test Case 3
-
-Inputs:
-
-    (int list) data = [1, 2, 3]
-
-    (int) n = 6
+    (int list) list2 = {2, 4, -4, 3, 1, 1, 14, 27, 50}
 
 Output:
 
-    (int list) [1, 2, 3]
+    (int) -4
+
 
 ## Constraints
 
