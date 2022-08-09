@@ -148,3 +148,19 @@ public class Solution {
 ```
 
 <a align="center" href="#top">(Back to top)</a>
+
+## Approach 
+
+The description of the task as provided by google is below. But since its not easy to understand, the goal of this task is to provide such an combination of keys to each bunny, that each combination of bunnies (containing at least num_required bunnies) will have all the keys. And at the same time any combination of lower number of bunnies will not have all the keys. The number of keys is not provided, but should be as small as possible.
+
+For explanation of algorithm consider what happes when you have exactly (num_required-1) bunnies. For example when: num_bunnies = 5, num_required = 4. Then all of the bunnies in group (num_required-1) have all the keys but one. That is because if they had all the keys, they would be able to open the doors by themself. And at the same time the remaining bunnies all have the missing key. Consider this example where we have (num_required - 1 = 4 - 1 = 3) bunnies (numbered 0,1,2) chosen among 5 bunnies (0,1,2,3,4)
+
+### 0 1 2 3 4 5 6 7 8 9 <- keys 0 x x x x x x x x x 1 x x x x x x x x x 2 x x x x x x x x x
+
+3 x 4 x ^ bunnies
+
+Any combination of (num_required-1) bunnies cannot open the doors by themself. But its enough to add any other bunny, and the doors will open. One can then connect each such combination with an unique key, because each combination will have a different key missing. That means you will have (num_bunnies chooses (num_required-1)) unique keys.
+
+The next step is to go through all such combinations of (num_required-1) bunnies and assign a new unique key, to all bunnies NOT in this combination. The resulting list of keys for each bunny is the result.
+
+There is an additional requirement for the distribution of keys beeing lexicographically least, which only means you have to list the combinations in correct order.
