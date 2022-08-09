@@ -15,7 +15,7 @@ To add some fun, it’s space themed. The evil Commander Lambda has kidnapped sp
 
 Personally, I found the Level 1, 2, and 3 problems similar to Leetcode problems, both in terms of difficulty and structure. The problems were straightforward and rarely required optimizing code for speed. On the other hand, Levels 4 and 5 were more complicated and layered multiple concepts into one problem.
 
-<a href="#top">(Back to top)</a>
+<a href="#top" align="right">(Back to top)</a>
 
 ## How to participate in the Foobar Challenge? 🙋‍♀️
 
@@ -46,3 +46,5 @@ At one point, Google used the challenge to find new talent. You’ll find many p
 After finishing Level 3, the Foobar server ask if you want to provide your contact info to a Google recruiter. I provided my info, but never heard from them.
 
 Nevertheless, I still believe this challenge is worthwhile. It will expose you to new coding concepts, sharpen your skills, and ultimately, make you a better developer.
+
+<a href="#top" align="right">(Back to top)</a>
