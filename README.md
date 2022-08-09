@@ -58,7 +58,7 @@ Nevertheless, I still believe this challenge is worthwhile. It will expose you t
 ### Level 2
 
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_0" target="_blank">Elevator Maintanance</a>
-- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_1" target="_blank">Something</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_2_1" target="_blank">Power Hungry</a>
 
 ### Level 3
 
