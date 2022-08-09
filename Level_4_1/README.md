@@ -1,17 +1,24 @@
 > <div id="top"></div>
 
-# Prepare the Bunnies' Escape
+# Free the Bunny Workers
 
 ##  Description
 
-You're awfully close to destroying the LAMBCHOP doomsday device and freeing Commander Lambda's bunny workers, but once they're free of the work duties the bunnies are going to need to escape Lambda's space station via the escape pods as quickly as possible. Unfortunately, the halls of the space station are a maze of corridors and dead ends that will be a deathtrap for the escaping bunnies. Fortunately, Commander Lambda has put you in charge of a remodeling project that will give you the opportunity to make things a little easier for the bunnies. Unfortunately (again), you can't just remove all obstacles between the bunnies and the escape pods - at most you can remove one wall per escape pod path, both to maintain structural integrity of the station and to avoid arousing Commander Lambda's suspicions.
+You need to free the bunny workers before Commander Lambda's space station explodes! Unfortunately, the Commander was very careful with the highest-value workers -- they all work in separate, maximum-security work rooms. The rooms are opened by putting keys into each console, then pressing the open button on each console simultaneously. When the open button is pressed, each key opens its corresponding lock on the work room. So, the union of the keys in all of the consoles must be all of the keys. The scheme may require multiple copies of one key given to different minions.
 
 <details><summary>Details about this assignment</summary>
-
-> You have maps of parts of the space station, each starting at a work area exit and ending at the door to an escape pod. The map is represented as a matrix of 0s and 1s, where 0s are passable space and 1s are impassable walls. The door out of the station is at the top left (0,0) and the door into an escape pod is at the bottom right (w-1,h-1).
+    
+> The consoles are far enough apart that a separate minion is needed for each one. Fortunately, you have already relieved some bunnies to aid you - and even better, you were able to steal the keys while you were working as Commander Lambda's assistant. The problem is, you don't know which keys to use at which consoles. The consoles are programmed to know which keys each minion had, to prevent someone from just stealing all of the keys and using them blindly. There are signs by the consoles saying how many minions had some keys for the set of consoles. You suspect that Commander Lambda has a systematic way to decide which keys to give to each minion such that they could use the consoles.
 > 
-> Write a function solution(map) that generates the length of the shortest path from the station door to the escape pod, where you are allowed to remove one wall as part of your remodeling plans. The path length is the total number of nodes you pass through, counting both the entrance and exit nodes. The starting and ending positions are always passable (0). The map will always be solvable, though you may or may not need to remove a wall. The height and width of the map can be from 2 to 20. Moves can only be made in cardinal directions; no diagonal moves are allowed.
+> You need to figure out the scheme that Commander Lambda used to distribute the keys. You know how many minions had keys, and how many consoles are by each work room. You know that Command Lambda wouldn't issue more keys than necessary (beyond what the key distribution scheme requires), and that you need as many bunnies with keys as there are consoles to open the work room.
 > 
+> Given the number of bunnies available and the number of locks required to open a work room, write a function solution(num_buns, num_required) which returns a specification of how to distribute the keys such that any num_required bunnies can open the locks, but no group of (num_required - 1) bunnies can.
+> 
+> Each lock is numbered starting from 0. The keys are numbered the same as the lock they open (so for a duplicate key, the number will repeat, since it opens the same lock). For a given bunny, the keys they get is represented as a sorted list of the numbers for the keys. To cover all of the bunnies, the final solution is represented by a sorted list of each individual bunny's list of keys. Find the lexicographically least such key distribution - that is, the first bunny should have keys sequentially starting from 0.
+> 
+> num_buns will always be between 1 and 9, and num_required will always be between 0 and 9 (both inclusive). For example, if you had 3 bunnies and required only 1 of them to open the cell, you would give each bunny the same key such that any of the 3 of them would be able to open it, like so: [ [0], [0], [0], ] If you had 2 bunnies and required both of them to open the cell, they would receive different keys (otherwise they wouldn't both actually be required), and your solution would be as follows: [ [0], [1], ] Finally, if you had 3 bunnies and required 2 of them to open the cell, then any 2 of the 3 bunnies should have all of the keys necessary to open the cell, but no single bunny would be able to do it. Thus, the solution would be: [ [0, 1], [0, 2], [1, 2], ]
+> 
+ <a href="#top">(Back to top)</a>
 </details> 
 
 ## Test Cases
@@ -24,29 +31,34 @@ Note that it may also be run against hidden test cases not shown here.
 
 Inputs:
 
-    (int list list) bunny_workers_list = [[0, 1, 1, 0], 
-        [0, 0, 0, 1], 
-        [1, 1, 0, 0], 
-        [1, 1, 1, 0]]
+    (int) a = 2
+    (int) b = 1
 
 Output:
 
-    7
+    (int list) ans = [[0], [0]]
     
 ### Test Case 2
 
 Inputs:
 
-    (int list list) bunny_workers_list = [0, 0, 0, 0, 0, 0], 
-        [1, 1, 1, 1, 1, 0], 
-        [0, 0, 0, 0, 0, 0], 
-        [0, 1, 1, 1, 1, 1], 
-        [0, 1, 1, 1, 1, 1], 
-        [0, 0, 0, 0, 0, 0]])
-    
+    (int) a = 4
+    (int) b = 4
+
 Output:
 
-    11
+    (int list) ans = [[0], [1], [2], [3]]
+    
+### Test Case 3
+
+Inputs:
+
+    (int) a = 5
+    (int) b = 3
+
+Output:
+
+    (int list) ans = [[0, 1, 2, 3, 4, 5], [0, 1, 2, 6, 7, 8], [0, 3, 4, 6, 7, 9], [1, 3, 5, 6, 8, 9], [2, 4, 5, 7, 8, 9]]
 
 <a align="center" href="#top">(Back to top)</a>
 
@@ -58,44 +70,81 @@ Output:
 ## Solution 
 
 ```
-from collections import deque
 
-directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-
-def bfs(row, col, m):
-    rows = len(m)
-    cols = len(m[0])
-    arr = []
-    for _ in range(rows):
-        arr.append([None] * cols)
-    arr[row][col] = 1
-    queue = deque()
-    queue.append((row, col))
-
-    while queue:
-        r, c = queue.popleft()
-        for dr, dc in directions:
-            nr, nc = (r + dr, c + dc)
-            if 0 <= nr < rows and 0 <= nc < cols and arr[nr][nc] is None:
-                arr[nr][nc] = arr[r][c] + 1
-                if m[nr][nc] != 1:
-                    queue.append((nr, nc))
-    return arr
+interface TwoArgInterface {
+    public void operation(int a[], int index);
+}
 
 
-def solution(m):
-    rows = len(m)
-    cols = len(m[0])
-    src = bfs(0, 0, m)
-    dest = bfs(rows - 1, cols - 1, m)
-    res = 20 * 20 + 1
-    for i in range(rows):
-        for j in range(cols):
-            if src[i][j] and dest[i][j]:
-                res = min(res, src[i][j] + dest[i][j] - 1)
-                if res == rows + cols - 1:
-                    return res
-    return res
+public class Solution {
+	static int freeKeyIndex = 0;
+
+    static void myCombinations(int n, int destination[], int destStartIdx, int sourceStartIdx, TwoArgInterface lambda ) {
+    	if (destStartIdx == destination.length) {
+    		lambda.operation(destination, freeKeyIndex);
+    		--freeKeyIndex;
+    		return;
+    	}
+    	
+    	for (int sourceIdx = sourceStartIdx; sourceIdx < n; ++sourceIdx) {
+    		destination[destStartIdx] = sourceIdx;
+    		myCombinations(n, destination, destStartIdx+1, sourceIdx+1, lambda);
+    	}
+    }
+    
+    static void makeCombinations(int n, int r, TwoArgInterface lambda)
+    {
+        // A temporary array to store all combination one by one
+        int data[]=new int[r];
+        myCombinations(n, data, 0, 0, lambda);
+    }
+ 
+    public static int[][] solution(int num_buns, int num_required) {
+    	int unique_keys = binomialInt(num_buns, num_required - 1);
+    	boolean bunnyKeyArray[][] = new boolean[num_buns][unique_keys];
+    	freeKeyIndex = unique_keys - 1;
+    	
+    	makeCombinations(num_buns, num_required-1, (combination, keyIdx) -> {
+    		for (int bunnyIdx = 0; bunnyIdx < num_buns; ++bunnyIdx) {
+    			bunnyKeyArray[bunnyIdx][keyIdx] = true;
+    		}
+    		for (int idx = 0; idx < combination.length; ++idx) {
+    			bunnyKeyArray[combination[idx]][keyIdx] = false;
+    		}
+    	});
+		
+		int keysPerBunny = unique_keys * (num_buns - num_required + 1) / num_buns;
+		int result[][] = new int[num_buns][keysPerBunny];
+		
+		for (int bunnyIdx = 0; bunnyIdx < num_buns; ++bunnyIdx) {
+			int bunnyKeyIdx = 0;
+			for (int keyIdx = 0; keyIdx < unique_keys; ++keyIdx) {
+				if(bunnyKeyArray[bunnyIdx][keyIdx]) {
+					result[bunnyIdx][bunnyKeyIdx] = keyIdx;
+					bunnyKeyIdx++;
+				}
+			}
+		}
+		
+		return result;
+		
+    }
+    
+    private static int binomialInt(int n, int k) {
+        if (k > n - k)
+            k = n - k;
+ 
+        int binom = 1;
+        for (int i = 1; i <= k; i++)
+            binom = binom * (n + 1 - i) / i;
+        return binom;
+    }
+    
+    public static void main (String[] args) {
+        solution(2, 1);
+    }
+}
+
 ```
 
 <a align="center" href="#top">(Back to top)</a>
