@@ -1,46 +1,18 @@
 > <div id="top"></div>
 
-# Doomsday Fuel
+# Prepare the Bunnies' Escape
 
 ##  Description
 
-Making fuel for the LAMBCHOP’s reactor core is a tricky process because of the exotic matter involved. It starts as raw ore, then during processing, begins randomly changing between forms, eventually reaching a stable form. There may be multiple stable forms that a sample could ultimately reach, not all of which are useful as fuel.
-
-Commander Lambda has tasked you to help the scientists increase fuel creation efficiency by predicting the end state of a given ore sample. You have carefully studied the different structures that the ore can take and which transitions it undergoes. It appears that, while random, the probability of each structure transforming is fixed. That is, each time the ore is in 1 state, it has the same probabilities of entering the next state (which might be the same state). You have recorded the observed transitions in a matrix. The others in the lab have hypothesized more exotic forms that the ore can become, but you haven’t seen all of them.
+You're awfully close to destroying the LAMBCHOP doomsday device and freeing Commander Lambda's bunny workers, but once they're free of the work duties the bunnies are going to need to escape Lambda's space station via the escape pods as quickly as possible. Unfortunately, the halls of the space station are a maze of corridors and dead ends that will be a deathtrap for the escaping bunnies. Fortunately, Commander Lambda has put you in charge of a remodeling project that will give you the opportunity to make things a little easier for the bunnies. Unfortunately (again), you can't just remove all obstacles between the bunnies and the escape pods - at most you can remove one wall per escape pod path, both to maintain structural integrity of the station and to avoid arousing Commander Lambda's suspicions.
 
 <details><summary>Details about this assignment</summary>
 
-> Write a function solution(m) that takes an array of array of non-negative integers representing how many times that state has gone to the next state and return an array of integers for each terminal state giving the exact probabilities of each terminal state, represented as the numerator for each state, then the denominator for all of them at the end and in simplest form. The matrix is at most 10 by 10. It is guaranteed that no matter which state the ore is in, there is a path from that state to a terminal state. That is, the processing will always eventually end in a stable state. The ore starts in state 0. The denominator will fit within a signed 32-bit integer during the calculation, as long as the fraction is simplified regularly.
-> For example, consider the matrix m:
-> ```
-> [
->   [0,1,0,0,0,1],  # s0, the initial state,goes to s1 and s5 with equal probability
->   [4,0,0,3,2,0],  # s1 can become s0, s3, or s4, but with different probabilities
->   [0,0,0,0,0,0],  # s2 is terminal, and unreachable (never observed in practice)
->   [0,0,0,0,0,0],  # s3 is terminal
->   [0,0,0,0,0,0],  # s4 is terminal
->   [0,0,0,0,0,0],  # s5 is terminal
-> ]
-> ```
+> You have maps of parts of the space station, each starting at a work area exit and ending at the door to an escape pod. The map is represented as a matrix of 0s and 1s, where 0s are passable space and 1s are impassable walls. The door out of the station is at the top left (0,0) and the door into an escape pod is at the bottom right (w-1,h-1).
 > 
-> So, we can consider different paths to terminal states, such as:
+> Write a function solution(map) that generates the length of the shortest path from the station door to the escape pod, where you are allowed to remove one wall as part of your remodeling plans. The path length is the total number of nodes you pass through, counting both the entrance and exit nodes. The starting and ending positions are always passable (0). The map will always be solvable, though you may or may not need to remove a wall. The height and width of the map can be from 2 to 20. Moves can only be made in cardinal directions; no diagonal moves are allowed.
 > 
-> ```
-> s0 -> s1 -> s3
-> s0 -> s1 -> s0 -> s1 -> s0 -> s1 -> s4
-> s0 -> s1 -> s0 -> s5
-> ```
-> 
-> Tracing the probabilities of each, we find that:
-> 
-> s2 has probability 0
-> s3 has probability 3/14
-> s4 has probability 1/7
-> s5 has probability 9/14
-> So, putting that together, and making a common denominator, gives an answer in the form of [s2.numerator, s3.numerator, s4.numerator, s5.numerator, denominator] which is [0, 3, 2, 9, 14].
-> 
-<a align="center" href="#top">(Back to top)</a>
-</details>
+</details> 
 
 ## Test Cases
 
@@ -52,33 +24,29 @@ Note that it may also be run against hidden test cases not shown here.
 
 Inputs:
 
-    (int) m = [
-        [0, 2, 1, 0, 0], 
-        [0, 0, 0, 3, 4], 
-        [0, 0, 0, 0, 0], 
-        [0, 0, 0, 0, 0], 
-        [0, 0, 0, 0, 0]
-    ]
+    (int list list) bunny_workers_list = [[0, 1, 1, 0], 
+        [0, 0, 0, 1], 
+        [1, 1, 0, 0], 
+        [1, 1, 1, 0]]
 
 Output:
 
-    (int list) [7, 6, 8, 21]
+    7
     
 ### Test Case 2
 
 Inputs:
 
-    (int) m = [
-        [0, 1, 0, 0, 0, 1],
-        [4, 0, 0, 3, 2, 0], 
+    (int list list) bunny_workers_list = [0, 0, 0, 0, 0, 0], 
+        [1, 1, 1, 1, 1, 0], 
         [0, 0, 0, 0, 0, 0], 
-        [0, 0, 0, 0, 0, 0], 
-        [0, 0, 0, 0, 0, 0], 
-        [0, 0, 0, 0, 0, 0]
-    ]
+        [0, 1, 1, 1, 1, 1], 
+        [0, 1, 1, 1, 1, 1], 
+        [0, 0, 0, 0, 0, 0]])
+    
 Output:
 
-    (int list) [0, 3, 2, 9, 14]
+    11
 
 <a align="center" href="#top">(Back to top)</a>
 
@@ -90,205 +58,44 @@ Output:
 ## Solution 
 
 ```
-from typing import List
-from math import gcd
-from fractions import Fraction
+from collections import deque
 
-"""
-example matrix:
-[
-    [0, 1, 0, 0, 0, 1],
-    [4, 0, 0, 3, 2, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0]
-]
-"""
+directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-def transform_matrix(m: List[List]):
-    """
-    example matrix becomes
-    [
-        [0, 1/2, 0, 0, 0, 1/2],
-        [4/9, 0, 0, 1/3, 2/9, 0],
-        [0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 1]
-    ]
-    """
-    l = len(m)
-    for i in range(l):
-        row_sum = sum(m[i])
-        if row_sum == 0:
-            m[i][i] = 1
-        else:
-            for j in range(l):
-                m[i][j] = Fraction(m[i][j], row_sum)
+def bfs(row, col, m):
+    rows = len(m)
+    cols = len(m[0])
+    arr = []
+    for _ in range(rows):
+        arr.append([None] * cols)
+    arr[row][col] = 1
+    queue = deque()
+    queue.append((row, col))
 
-def get_submatrix(matrix: List[List], rows: List, cols: List) -> List[List]:
-    new_matrix = []
-    for row in rows:
-        current_row = []
-        for col in cols:
-            current_row.append(matrix[row][col])
-        new_matrix.append(current_row)
-    return new_matrix
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in directions:
+            nr, nc = (r + dr, c + dc)
+            if 0 <= nr < rows and 0 <= nc < cols and arr[nr][nc] is None:
+                arr[nr][nc] = arr[r][c] + 1
+                if m[nr][nc] != 1:
+                    queue.append((nr, nc))
+    return arr
 
-def get_q_matrix(matrix: List[List], transient_states: List) -> List[List]:
-    """
-    For example matrix
-    q_matrix = [
-        [0, 1/2],
-        [4/9, 0]
-    ]
-    """
-    return get_submatrix(matrix, transient_states, transient_states)
-
-def get_r_matrix(matrix: List[List], transient_states: List, absorbing_states: List) -> List[List]:
-    """
-    For example matrix
-    r_matrix = [
-        [0, 0, 0, 1/2],
-        [0, 1/3, 2/9, 0]
-    ]
-    """
-    return get_submatrix(matrix, transient_states, absorbing_states)
-
-def make_2d_list(n: int, m: int) -> List[List]:
-    a = []
-    for row in range(n):
-        a += [[0]*m]
-    return a
-
-def make_identity(n: int) -> List[List]:
-    """
-    for n=3, it returns
-    [
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 0, 1]
-    ]
-    """
-    matrix = make_2d_list(n, n)
-    for i in range(n):
-        matrix[i][i] = 1
-    return matrix
-
-def subtract_matrices(a: List[List], b: List[List]) -> List[List]:
-    new_matrix = []
-    n, m = len(a), len(b)
-    for i in range(n):
-        row = []
-        for j in range(m):
-            row.append(a[i][j] - b[i][j])
-        new_matrix.append(row)
-    return new_matrix
-
-def multiply_matrices(a: List[List], b: List[List]) -> List[List]:
-    """
-    Multiply two matrices a and b
-    matrix a of size A X B and matrix b of size B X C
-    would yield a matrix c of size A X C
-    """
-    ar, ac, bc = len(a), len(a[0]), len(b[0])
-    c = make_2d_list(ar, bc)
-    for i in range(ar):
-        for j in range(bc):
-            prod = Fraction(0, 1)
-            for k in range(ac):
-                prod += a[i][k] * b[k][j]
-            c[i][j] = prod
-    return c
-
-def multiply_row_of_square_matrix(matrix: List[List], row: int, k: int) -> List[List]:
-    n = len(matrix)
-    identity = make_identity(n)
-    identity[row][row] = k
-    return multiply_matrices(identity, matrix)
-
-def add_multiple_of_row_of_square_matrix(matrix: List[List], source_row: int, k: int, target_row: int):
-    """
-    add k * source_row to target_row of matrix m
-    """
-    n = len(matrix)
-    row_operator = make_identity(n)
-    row_operator[target_row][source_row] = k
-    return multiply_matrices(row_operator, matrix)
-
-def invert_matrix(matrix: List[List]) -> List[List]:
-    n = len(matrix)
-    inverse = make_identity(n)
-    for col in range(n):
-        diagonal_row = col
-        k = Fraction(1, matrix[diagonal_row][col])
-        matrix = multiply_row_of_square_matrix(matrix, diagonal_row, k)
-        inverse = multiply_row_of_square_matrix(inverse, diagonal_row, k)
-        source_row = diagonal_row
-        for target_row in range(n):
-            if source_row != target_row:
-                k = -matrix[target_row][col]
-                matrix = add_multiple_of_row_of_square_matrix(matrix, source_row, k, target_row)
-                inverse = add_multiple_of_row_of_square_matrix(inverse, source_row, k, target_row)
-    return inverse
-
-def lcm(a: int, b: int) -> int:
-    result = a * b // gcd(a, b)
-    return result
-
-def lcm_for_arrays(args: List) -> int:
-    array_length = len(args)
-    if array_length <= 2:
-        return lcm(*args)
-
-    initial = lcm(args[0], args[1])
-    i = 2
-    while i < array_length:
-        initial = lcm(initial, args[i])
-        i += 1
-    return initial
 
 def solution(m):
-    """
-    For example matrix
-    transient_states = [0, 1]
-    absorbing_states = [2, 3, 4, 5]
-    """
-    transient_states = []
-    absorbing_states = []
-    for i in range(len(m)):
-        row = m[i]
-        if sum(row) == 0:
-            absorbing_states.append(i)
-        else:
-            transient_states.append(i)
-
-    transform_matrix(m)
-
-    q = get_q_matrix(m, transient_states)
-    r = get_r_matrix(m, transient_states, absorbing_states)
-    identity = make_identity(len(q))
-    diff = subtract_matrices(identity, q)
-    inverse = invert_matrix(diff)
-    result = multiply_matrices(inverse, r)
-    print('initial result', result)
-
-    denominator = lcm_for_arrays([item.denominator for item in result[0]])
-    result = [item.numerator * denominator // item.denominator for item in result[0]]
-    result.append(denominator)
-    return result
-
-if __name__ == "__main__":
-    m1 = [
-        [0, 1, 0, 0, 0, 1],
-        [4, 0, 0, 3, 2, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-    ]
-    print(solution(m1))
+    rows = len(m)
+    cols = len(m[0])
+    src = bfs(0, 0, m)
+    dest = bfs(rows - 1, cols - 1, m)
+    res = 20 * 20 + 1
+    for i in range(rows):
+        for j in range(cols):
+            if src[i][j] and dest[i][j]:
+                res = min(res, src[i][j] + dest[i][j] - 1)
+                if res == rows + cols - 1:
+                    return res
+    return res
 ```
 
 <a align="center" href="#top">(Back to top)</a>
