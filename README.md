@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-# FooBar Google Interview
+# Google Foobar
 
 ## What is the Foobar Challenge? 🧐
 
