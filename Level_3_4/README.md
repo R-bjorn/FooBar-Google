@@ -1,17 +1,19 @@
 > <div id="top"></div>
 
-# Prepare the Bunnies' Escape
+# Find the Access Codes
 
 ##  Description
 
-You're awfully close to destroying the LAMBCHOP doomsday device and freeing Commander Lambda's bunny workers, but once they're free of the work duties the bunnies are going to need to escape Lambda's space station via the escape pods as quickly as possible. Unfortunately, the halls of the space station are a maze of corridors and dead ends that will be a deathtrap for the escaping bunnies. Fortunately, Commander Lambda has put you in charge of a remodeling project that will give you the opportunity to make things a little easier for the bunnies. Unfortunately (again), you can't just remove all obstacles between the bunnies and the escape pods - at most you can remove one wall per escape pod path, both to maintain structural integrity of the station and to avoid arousing Commander Lambda's suspicions.
+In order to destroy Commander Lambda's LAMBCHOP doomsday device, you'll need access to it. But the only door leading to the LAMBCHOP chamber is secured with a unique lock system whose number of passcodes changes daily. Commander Lambda gets a report every day that includes the locks' access codes, but only the Commander knows how to figure out which of several lists contains the access codes. You need to find a way to determine which list contains the access codes once you're ready to go in.
 
 <details><summary>Details about this assignment</summary>
 
-> You have maps of parts of the space station, each starting at a work area exit and ending at the door to an escape pod. The map is represented as a matrix of 0s and 1s, where 0s are passable space and 1s are impassable walls. The door out of the station is at the top left (0,0) and the door into an escape pod is at the bottom right (w-1,h-1).
+> Fortunately, now that you're Commander Lambda's personal assistant, Lambda has confided to you that all the access codes are "lucky triples" in order to make it easier to find them in the lists. A "lucky triple" is a tuple (x, y, z) where x divides y and y divides z, such as (1, 2, 4). With that information, you can figure out which list contains the number of access codes that matches the number of locks on the door when you're ready to go in (for example, if there's 5 passcodes, you'd need to find a list with 5 "lucky triple" access codes).
 > 
-> Write a function solution(map) that generates the length of the shortest path from the station door to the escape pod, where you are allowed to remove one wall as part of your remodeling plans. The path length is the total number of nodes you pass through, counting both the entrance and exit nodes. The starting and ending positions are always passable (0). The map will always be solvable, though you may or may not need to remove a wall. The height and width of the map can be from 2 to 20. Moves can only be made in cardinal directions; no diagonal moves are allowed.
+> Write a function solution(l) that takes a list of positive integers l and counts the number of "lucky triples" of (li, lj, lk) where the list indices meet the requirement i < j < k. The length of l is between 2 and 2000 inclusive. The elements of l are between 1 and 999999 inclusive. The solution fits within a signed 32-bit integer. Some of the lists are purposely generated without any access codes to throw off spies, so if no triples are found, return 0.
 > 
+> For example, [1, 2, 3, 4, 5, 6] has the triples: [1, 2, 4], [1, 2, 6], [1, 3, 6], making the solution 3 total.
+
 </details> 
 
 ## Test Cases
@@ -24,29 +26,21 @@ Note that it may also be run against hidden test cases not shown here.
 
 Inputs:
 
-    (int list list) bunny_workers_list = [[0, 1, 1, 0], 
-        [0, 0, 0, 1], 
-        [1, 1, 0, 0], 
-        [1, 1, 1, 0]]
+    (int list ) list = [1, 2, 3, 4, 5, 6]
 
 Output:
 
-    7
+    3
     
 ### Test Case 2
 
 Inputs:
 
-    (int list list) bunny_workers_list = [0, 0, 0, 0, 0, 0], 
-        [1, 1, 1, 1, 1, 0], 
-        [0, 0, 0, 0, 0, 0], 
-        [0, 1, 1, 1, 1, 1], 
-        [0, 1, 1, 1, 1, 1], 
-        [0, 0, 0, 0, 0, 0]])
-    
+    (int list ) list = [1, 1, 1]
+
 Output:
 
-    11
+    1
 
 <a align="center" href="#top">(Back to top)</a>
 
@@ -57,45 +51,6 @@ Output:
 
 ## Solution 
 
-```
-from collections import deque
-
-directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-
-def bfs(row, col, m):
-    rows = len(m)
-    cols = len(m[0])
-    arr = []
-    for _ in range(rows):
-        arr.append([None] * cols)
-    arr[row][col] = 1
-    queue = deque()
-    queue.append((row, col))
-
-    while queue:
-        r, c = queue.popleft()
-        for dr, dc in directions:
-            nr, nc = (r + dr, c + dc)
-            if 0 <= nr < rows and 0 <= nc < cols and arr[nr][nc] is None:
-                arr[nr][nc] = arr[r][c] + 1
-                if m[nr][nc] != 1:
-                    queue.append((nr, nc))
-    return arr
-
-
-def solution(m):
-    rows = len(m)
-    cols = len(m[0])
-    src = bfs(0, 0, m)
-    dest = bfs(rows - 1, cols - 1, m)
-    res = 20 * 20 + 1
-    for i in range(rows):
-        for j in range(cols):
-            if src[i][j] and dest[i][j]:
-                res = min(res, src[i][j] + dest[i][j] - 1)
-                if res == rows + cols - 1:
-                    return res
-    return res
-```
+![image](https://user-images.githubusercontent.com/81584201/183737662-08a69269-000c-47ba-be16-d4c34fae6e6f.png)
 
 <a align="center" href="#top">(Back to top)</a>
