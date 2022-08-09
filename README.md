@@ -51,6 +51,17 @@ Nevertheless, I still believe this challenge is worthwhile. It will expose you t
 
 ## Levels 
 
+> What does the challenge look like? The challenge consists of 5 levels. Each level has different problems and complexity. Each level is progressively more difficult and many of the challenges were math-heavy.
+> - Level 1 has one challenge with a time limit of 48 hours (2 days).
+> - Level 2 has two challenges with a time limit of 72 hours (3 days) per challenge.
+> - Level 3 has three challenges with a time limit of 96 hours (4 days) per challenge.
+> - Level 4 has two challenges with a time limit of 360 hours (15 days) per challenge.
+> - Level 5 has one challenge with a time limit of 528 hours (22 days).
+
+Solutions could be provided in either Python or Java. I was looking forward to completing this challange and improving my Java problem solving and different approach skills. 
+
+Once you decide to play, you will be redirected to the foobar page and you’ve managed to infiltrate Commander Lambda’s organization and finally earned yourself an entry-level position as a Minion space station. To start the challenge, you need to request by using request command.
+
 ### Level 1 
 
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_1" target="_blank">Skipping Work</a>
