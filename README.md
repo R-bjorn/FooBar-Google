@@ -76,6 +76,8 @@ Once you decide to play, you will be redirected to the foobar page and you’ve 
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_3_0" target="_blank">Queue To Do</a>
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_3_1" target="_blank">Boom, Baby!</a>
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_3_2" target="_blank">Doomsday Fuel</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_3_3" target="_blank">Prepare the Bunnies' Escape</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_3_4" target="_blank">Find the Access Codes</a>
 
 ### Level 4
 
