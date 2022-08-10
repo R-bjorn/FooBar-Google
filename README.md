@@ -6,11 +6,6 @@
 
 > The Foobar Challenge is a coding challenge hosted by Google that can be completed in either Python or Java. I completed the challenge using Python. The challenge has its own server with specific, terminal-style commands.
 
-<div align="center">
-
-![1__lBOiMVblsD-J7N1tuNxrQ](https://user-images.githubusercontent.com/81584201/183710089-fea734bb-a5f5-432c-9f25-bf9ca191581b.jpeg)
-
-</div>
 To add some fun, it’s space themed. The evil Commander Lambda has kidnapped space bunnies and you must rescue them. Each problem adds more context to the backstory. The problems are of various difficulty organized into 5 levels. Each question must be solved within a certain time limit. More time is given for the higher levels.
 
 Personally, I found the Level 1, 2, and 3 problems similar to Leetcode problems, both in terms of difficulty and structure. The problems were straightforward and rarely required optimizing code for speed. On the other hand, Levels 4 and 5 were more complicated and layered multiple concepts into one problem.
