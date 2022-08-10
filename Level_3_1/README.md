@@ -11,7 +11,7 @@ Every Mach bomb retrieves a sync unit from a Facula bomb; for every Mach bomb, a
 Every Facula bomb spontaneously creates a Mach bomb.
 
 <details><summary>Details about this assignment</summary>
->  
+    
 > For example, if you had 3 Mach bombs and 2 Facula bombs, they could either produce 3 Mach bombs and 5 Facula bombs, or 5 Mach bombs and 2 Facula bombs. The replication process can be changed each cycle.
 > 
 > Second, you need to ensure that you have exactly the right number of Mach and Facula bombs to destroy the LAMBCHOP device. Too few, and the device might survive. Too many, and you might overload the mass capacitors and create a singularity at the heart of the space station - not good!
