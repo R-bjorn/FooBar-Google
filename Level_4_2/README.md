@@ -10,11 +10,11 @@ Luckily, the beams can only travel a certain maximum distance before becoming to
 
 <details><summary>Details about this assignment</summary>
 
-> Write a function `solution(dimensions, your_position, guard_position, distance)` that gives an array of **2** integers of the width and height of the room, an array of **2** integers of your **x** and **y** coordinates in the room, an array of **2** integers of the guard's** x** and **y** coordinates in the room, and returns an integer of the number of distinct directions that you can fire to hit the elite guard, given the maximum distance that the beam can travel.
+> Write a function `solution(dimensions, your_position, guard_position, distance)` that gives an array of **2** integers of the width and height of the room, an array of **2** integers of your **x** and **y** coordinates in the room, an array of **2** integers of the guard's **x** and **y** coordinates in the room, and returns an integer of the number of distinct directions that you can fire to hit the elite guard, given the maximum distance that the beam can travel.
 > 
-> The room has integer dimensions `[1 < x_dim <= 1250, 1 < y_dim <= 1250]`. You and the elite guard are both positioned on the integer lattice at different distinct positions **(x, y)** inside the room such that `[0 < x < x_dim, 0 < y < y_dim]`. Finally, the maximum distance that the beam can travel before becoming harmless will be given as an integer** 1 < distance <= 10000.**
+> The room has integer dimensions `[1 < x_dim <= 1250, 1 < y_dim <= 1250]`. You and the elite guard are both positioned on the integer lattice at different distinct positions **(x, y)** inside the room such that `[0 < x < x_dim, 0 < y < y_dim]`. Finally, the maximum distance that the beam can travel before becoming harmless will be given as an integer **1 < distance <= 10000**.
 > 
-> For example, if you and the elite guard were positioned in a room with dimensions **[3, 2]**, your_position **[1, 1]**, guard_position** [2, 1]**, and a maximum shot distance of** 4**, you could shoot in seven different directions to hit the elite guard (given as vector bearings from your location): **[1, 0], [1, 2], [1, -2], [3, 2], [3, -2], [-3, 2], and [-3, -2]**. As specific examples, the shot at bearing **[1, 0]** is the straight line horizontal shot of distance **1**, the shot at bearing **[-3, -2]** bounces off the left wall and then the bottom wall before hitting the elite guard with a total shot distance of **sqrt(13)**, and the shot at bearing **[1, 2]** bounces off just the top wall before hitting the elite guard with a total shot distance of **sqrt(5)**.
+> For example, if you and the elite guard were positioned in a room with dimensions **[3, 2]**, your_position **[1, 1]**, guard_position **[2, 1]**, and a maximum shot distance of **4**, you could shoot in seven different directions to hit the elite guard (given as vector bearings from your location): **[1, 0], [1, 2], [1, -2], [3, 2], [3, -2], [-3, 2], and [-3, -2]**. As specific examples, the shot at bearing **[1, 0]** is the straight line horizontal shot of distance **1**, the shot at bearing **[-3, -2]** bounces off the left wall and then the bottom wall before hitting the elite guard with a total shot distance of **sqrt(13)**, and the shot at bearing **[1, 2]** bounces off just the top wall before hitting the elite guard with a total shot distance of **sqrt(5)**.
 
 <a href ="#top">(Back to top)</a>
 </details> 
@@ -103,7 +103,7 @@ Then, create x_imgs × y_imgs mirror images of the room in the first quadrant. N
 
 <img src="https://user-images.githubusercontent.com/81584201/183752025-b86dcc9b-aaf5-4a35-afdb-c68a50aa0de7.jpg" width=50% >    
 
-Now, image reflections in quadrants **II, III, and IV **can be included by reflecting the points in the first quadrant accordingly.
+Now, image reflections in quadrants **II, III, and IV** can be included by reflecting the points in the first quadrant accordingly.
 
 ```
 def include_reflections(pts):
@@ -122,7 +122,7 @@ guard_pts = include_reflections(guard_pts)
 
 ### Removing targets outside of range
 
-Since every bullet has a straight-line path, the length of the path is just the Euclidean distance **SQRT((x<sub>1</sub>−x<sub>0</sub>)<sup>2</sup>+(y<sub>1</sub>−y<sub>0</sub>)<sup>2</sup>) **between the player (**x<sub>0</sub>,y<sub>0</sub>**) and the target (**x<sub>1</sub>,y<sub>1</sub>**). To filter targets outside of range, remove any targets whose path is larger than the maximum range.
+Since every bullet has a straight-line path, the length of the path is just the Euclidean distance **SQRT((x<sub>1</sub>−x<sub>0</sub>)<sup>2</sup>+(y<sub>1</sub>−y<sub>0</sub>)<sup>2</sup>)** between the player (**x<sub>0</sub>,y<sub>0</sub>**) and the target (**x<sub>1</sub>,y<sub>1</sub>**). To filter targets outside of range, remove any targets whose path is larger than the maximum range.
 
 ```
 def distance(x0, y0, x1, y1):
@@ -145,7 +145,7 @@ def filter_pts(x, y, pts, dist):
 There are now two list of coordinates: one representing all the guard reflections in range and a one representing all the player reflections in range. Each shot that hits a guard can then be represented by the angle the path forms with **0 degrees**.
 <img src="https://user-images.githubusercontent.com/81584201/183751973-de746458-2819-401f-b382-4ddd2aad3663.jpg" width=50%>    
 
-As shown, if the player’s position is (**x<sub>0</sub>,y0<sub>0</sub>**) and the target is (**x<sub>1</sub>,y<sub>1</sub>**), then the corresponding angle can be calculated with **θ=arctan(<sub>Δx</sub><sup>Δy</sup>)**. The angle corresponding to each guard and to each player will be saved in a map **__guard_angles__** and **__player_angles__** respectively, which map angles to the corresponding target coordinates. If an angle corresponds to multiple guards, only the closest guard will be recorded; likewise for the closest player.
+As shown, if the player’s position is (**x<sub>0</sub>,y<sub>0</sub>**) and the target is (**x<sub>1</sub>,y<sub>1</sub>**), then the corresponding angle can be calculated with **θ=arctan(<sub>Δx</sub><sup>Δy</sup>)**. The angle corresponding to each guard and to each player will be saved in a map **__guard_angles__** and **__player_angles__** respectively, which map angles to the corresponding target coordinates. If an angle corresponds to multiple guards, only the closest guard will be recorded; likewise for the closest player.
 
 ```
 def angle(x0, y0, x1, y1):
