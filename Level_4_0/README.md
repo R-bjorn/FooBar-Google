@@ -76,17 +76,18 @@ It's a max flow problem in graph theory (check wiki for introduction about a gra
 
 That is, for a graph as following, we have a source node, a target node and four nodes between them. We can conceive arrows in the graph are pipelines and each of them has different capacity of flow, such as 9 from Source to Node 1 and 3 from Node 1 to Node 2. Moreover, pipelines have direction which means, for example, the flow can only go from Node 1 to Node 2 but it can travel between Node 3 and Node 4.
 
-![image](https://user-images.githubusercontent.com/81584201/183741738-46837421-037c-4dc4-af18-b30d74ef6e14.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208208-55409af3-2349-45c1-9011-4bc5abf23d28.jpg" height="300"/>
 
 We have many algorithms to approach and the most intuitive one is greedy algorithm - we always choose the pipeline with max amount of flow in each step and randomly select if all optionals have the same outcome.
 
 For example, there are two pipes from Source with the same amount of flow. We can either select Node 1 or Node 2. If the selection is { S - 1 }, then by greedy algorithm, the path should be { S - 1 - 2 - 3 - T } and the max flow is 7 on this path.
 
-![image](https://user-images.githubusercontent.com/81584201/183741754-c974056b-cb15-4ef8-b734-c9620fc83c90.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208260-36491ff4-f7e2-4e20-a45e-2438c13d3971.jpg" height="300"/>
+
 
 Thus, by subtracting 7, the capacity of Node 2 and Node 3 is drained and no longer walkable. Repeatedly processing until no path from Source to Target left as following, we call the graph is disconnected. And the max flow is 16.
 
-![image](https://user-images.githubusercontent.com/81584201/183741774-cd27c6bb-1e3a-4068-9524-4a212cee2c00.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208307-54b2d674-b2f8-4e45-b7d4-f37267983de8.jpg" height="300"/>
 
 However, the answer is wrong and the correct max flow is 17. That is, greedy algorithm potentially wastes capacities of pipes so it cannot always guarantee to find the right one.
 
@@ -100,7 +101,7 @@ Many mathematicians has offered their ideas. We are now going to try Edmonds-Kar
 
 Repeatedly processing until the graph is disconnected, then we can find the right answer. For example, we choose { S - 2 - 3 - T } as our first path and the flow is 7. Then, we subtract all pipes by 7 and **add opposite augmenting paths with 7 on all pipes we walked **( blue arrows ).
 
-![image](https://user-images.githubusercontent.com/81584201/183741793-617b3092-6b62-454b-8ee1-800296563a35.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208353-6a9c0b3e-83af-4608-ae2c-efeaa9e31d30.jpg" height="300"/>
 
 The main difference to greedy algorithm is augmenting paths are walkable, which means the path { S - 1 - 3 - 2 - 4 - T } is feasible.
 
@@ -126,7 +127,7 @@ For Node 2, its neighbors are { 3 4 }; however, Node 3 had been selected by Node
 
 When all nodes in Position were selected, we can replace { 2 3 } and { 3 4 } into Position. But Node 2 was chosen and Node 3 are double so we truncate them and leave only { 3 4 }. In the end, Node 3 and Node 4 have the same neighbor Target and thus stopping the algorithm.
 
-![image](https://user-images.githubusercontent.com/81584201/183741814-ba939f7e-f35f-4a00-b20f-f28726d83bb9.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208400-1b78ad18-2b40-498e-a25f-c3c555956baf.jpg" height="500"/>
 
 As above, the shortest path is { S - 2 - 4 - T }. Additionally, it's easy to observe that these paths are not unique and in turn, can be multiple. But it doesn't matter how we choose and won't affect the final result.
 
@@ -134,7 +135,7 @@ As above, the shortest path is { S - 2 - 4 - T }. Additionally, it's easy to obs
 
 If we have a graph with multiple Source or Target nodes, then it might be complicated for coding. One way to solve is adding a Super Source and Super Target by which we always keep a one-Source-and-one-Target graph. It will look like an example as following:
 
-![image](https://user-images.githubusercontent.com/81584201/183741833-c4a779c5-f749-43d9-a103-a05b52b905af.png)
+<img src="https://user-images.githubusercontent.com/81584201/184208438-8b2864af-7e50-4984-83ea-a001df9fd33e.jpg" height="300"/>
 
 The red nodes are Super Source and Super Target respectively. This modified graph always has the same result with pervious one but simplifies algorithms. Note that we should assign a huge enough capacities for pipes connected to Super Source and Super Target ( red arrows ) for preventing drained.
 
