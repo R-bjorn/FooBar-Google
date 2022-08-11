@@ -60,6 +60,7 @@ Once you decide to play, you will be redirected to the foobar page and you’ve 
 ### Level 1 
 
 - <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_1" target="_blank">Skipping Work</a>
+- <a href="https://github.com/R-bjorn/FooBar-Google-Interview/tree/main/Level_1_1" target="_blank">Minion Labor Shifts</a>
 
 ### Level 2
 
