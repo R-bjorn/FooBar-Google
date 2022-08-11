@@ -78,8 +78,8 @@ The benefit of this is that now every bullet has a straight-line path, making it
 ### Generating mirror images
 It’s enough to compute the upper and right mirror images (1st quadrant), since the other images are just reflections of the first quadrant. First, determine the maximum number of images to the right (**x_imgs**) and above (**y_imgs**) that can fit within the maximum bullet range (dist). Integer division is used here to prevent splitting a room in half. If even a little a bit of the reflected room is in range, the entire reflection will be included so as to not miss any guards. The guards inside the room outside of the maximal range can be filtered later.
 ```
-    **x_imgs** = (dist // dimensions[0]) + 2
-    **y_imgs** = (dist // dimensions[1]) + 2
+    x_imgs = (dist // dimensions[0]) + 2
+    y_imgs = (dist // dimensions[1]) + 2
 ```
 
 Then, create x_imgs × y_imgs mirror images of the room in the first quadrant. Note that if the number of the image is even, it is an exact copy of the original room (it is a reflection of a reflection), but if its odd, the room needs to be reflected. The coordinates of each reflected guard and each reflected player are stored in respective your_pts and guard_pts lists.
